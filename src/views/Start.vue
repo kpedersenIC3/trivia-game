@@ -6,11 +6,10 @@ import { useStore } from 'vuex';
 
 const router = useRouter()
 const store = useStore()
+
 onMounted(() => {
     store.dispatch("fetchUsers")
 })
-
-
 
 
 const username = ref('')
@@ -19,13 +18,9 @@ const noOfQuestions = ref('')
 const category = ref('')
 
 const onSubmit = () => {
-    store.commit("setCurrentUser", username.value)
+    store.commit("setCurrentUser", {username:username.value, currentscore:0})
     store.commit("setQuestionOptions", {amount:noOfQuestions.value, category:category.value, difficulty:difficulty.value})
     store.dispatch("fetchQuestions")
-}
-
-const quest_list = computed(() => store.getters.getQuestions)
-const goToQuestions = () => {
     router.push('/questions')
 }
 </script>
@@ -84,9 +79,6 @@ const goToQuestions = () => {
         </fieldset>
 
     </form>
-
-    <br>
-    <button @click="goToQuestions">Go To Questions</button>
 
 </template>
 
