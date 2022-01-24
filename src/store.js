@@ -4,6 +4,7 @@ const store = createStore({
     state: {
         currentuser: {
             username: '',
+            currentscore: '',
         },
         userlist: {
 
@@ -18,7 +19,7 @@ const store = createStore({
     },
     mutations: {
         setCurrentUser: (state, payload) => {
-            state.currentuser.username = payload
+            state.currentuser = payload
         },
         setUserList: (state, payload) => {
             state.userlist = payload
@@ -31,6 +32,9 @@ const store = createStore({
                 ...payload
             }
 
+        },
+        updateCurrentScore: (state,payload) => {
+            state.currentuser.currentscore += payload
         }
     },
     actions: {
