@@ -17,6 +17,6 @@ Select a category, the amount of questions, difficulty and start racking those p
 ### Contribution
 No PR
 ### Authors
-Kasper Pedersen
-Frosti Hallfridarson 
-Jesper A.E. Jensen
+- Kasper Pedersen
+- Frosti Hallfridarson 
+- Jesper A.E. Jensen
