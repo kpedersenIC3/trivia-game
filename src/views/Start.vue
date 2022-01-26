@@ -21,6 +21,8 @@ const onSubmit = () => {
     store.commit("setCurrentUser", {username:username.value, currentscore:0})
     store.commit("setQuestionOptions", {amount:noOfQuestions.value, category:category.value, difficulty:difficulty.value})
     store.dispatch("fetchQuestions")
+    //store.dispatch("setCurrentQuestion")
+
     router.push('/questions')
 }
 </script>

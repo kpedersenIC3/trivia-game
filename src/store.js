@@ -14,8 +14,10 @@ const store = createStore({
         },
         questions: {
 
-        }
+        },
+        currentquestion: {
 
+        },
     },
     mutations: {
         setCurrentUser: (state, payload) => {
@@ -31,13 +33,15 @@ const store = createStore({
             state.questions = {
                 ...payload
             }
-
         },
         updateCurrentScore: (state,payload) => {
             state.currentuser.currentscore += payload
         }
     },
     actions: {
+        async setCurrentQuestion({ commit }) {
+            commit('setCurrentQuestion', 0)
+        },
         async fetchUsers({ commit }) {
             const response = await fetch("https://kasper-assignment-api.herokuapp.com/trivia")
             const users = await response.json()
@@ -78,7 +82,8 @@ const store = createStore({
         getUserList: (state) => {return state.userlist},
         getCurrentUser: (state) => {return state.currentuser},
         getQuestionOptions: (state) => {return state.questionoptions},
-        getQuestions: (state) => {return state.questions}
+        getQuestions: (state) => {return state.questions.results},
+        getNoOfQuestions : (state) => {return state.questionoptions.amount}
     }
 })
 
