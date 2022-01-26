@@ -21,7 +21,9 @@ const category = ref('General Knowledge')
 
 //To start the game initialize the user and question selections and move to questions view
 const onSubmit = () => {
-    store.commit("setCurrentUser", {username:username.value, currentscore:0})
+    store.commit("setCurrentUser", {username:username.value, currentscore:0, token:'', highScore:0})
+    store.dispatch("fetchUsers")
+    store.dispatch("checkExistingUser")
     store.commit("setQuestionOptions", {amount:noOfQuestions.value, category:category.value, difficulty:difficulty.value})
     store.dispatch("fetchQuestions")
     router.push('/questions')
