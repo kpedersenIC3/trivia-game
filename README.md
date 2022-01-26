@@ -2,6 +2,7 @@
 
 ### Installation
 follow the description below, to install the application.
+
 0. Make sure to have Node.js installed
 1. Clone repository to your machine
 2. Run 'npm install' in your terminal or preferred CLI - Please search for corresponding commands if you are using yarn
