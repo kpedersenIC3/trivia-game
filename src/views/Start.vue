@@ -4,53 +4,51 @@ import { reactive, ref, computed } from 'vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 
+//create the router and the store
 const router = useRouter()
 const store = useStore()
 
+//get the users from the userAPI when starting
 onMounted(() => {
     store.dispatch("fetchUsers")
 })
 
-
+//Save the user inputs in variables
 const username = ref('')
-const difficulty = ref('')
-const noOfQuestions = ref('')
-const category = ref('')
+const difficulty = ref('easy')
+const noOfQuestions = ref('5')
+const category = ref('General Knowledge')
 
+//To start the game initialize the user and question selections and move to questions view
 const onSubmit = () => {
     store.commit("setCurrentUser", {username:username.value, currentscore:0})
     store.commit("setQuestionOptions", {amount:noOfQuestions.value, category:category.value, difficulty:difficulty.value})
     store.dispatch("fetchQuestions")
-    //store.dispatch("setCurrentQuestion")
-
     router.push('/questions')
 }
 </script>
 
 <template>
+<!-- Say a welcoming message and promt for username and what questions the user wants -->
     <h2>Welcome to the Trivia App</h2>
     <form @submit.prevent="onSubmit">
         <fieldset>
             <p>Please enter your username:</p>
             <input v-model="username">
-            <p>{{username}}</p>
-            <br>
         </fieldset>
 
         <fieldset class="start-selectors">
             <div id="start-selector">
             <p>Select Difficulty</p>
-            <input type="radio" value="easy" v-model="difficulty">
+            <input type="radio" value="easy" v-model="difficulty" checked="checked">
             <label for="easy">Easy</label>
             <input type="radio" value="hard" v-model="difficulty">
             <label for="hard">Hard</label>
-            <br>
-            <span>You selected {{ difficulty }} mode</span>
             </div>
 
             <div id="start-selector">
             <p>Choose amount of questions</p>
-            <input type="radio" value="5" v-model="noOfQuestions">
+            <input type="radio" value="5" v-model="noOfQuestions" checked="checked">
             <label for="5">5</label>
             <input type="radio" value="10" v-model="noOfQuestions">
             <label for="10">10</label>
@@ -58,8 +56,6 @@ const onSubmit = () => {
             <label for="15">15</label>
             <input type="radio" value="20" v-model="noOfQuestions">
             <label for="20">20</label>
-            <br>
-            <span>You selected {{ noOfQuestions }} questions</span>
             </div>
 
             <div id="start-selector">
@@ -71,13 +67,11 @@ const onSubmit = () => {
                 <option>Sports</option>
                 <option>History</option>
             </select>
-            <br>
-            <span>You chose {{ category }} mode</span>
             </div>
         </fieldset>
         <fieldset>
             <br>
-            <button type="submit">Submit</button>
+            <button type="submit">Start Quizzing</button>
         </fieldset>
 
     </form>
@@ -85,6 +79,7 @@ const onSubmit = () => {
 </template>
 
 <style scoped>
+/* A bouncing title along with layout of selector environment */
     h2 {
         animation: bounceInDown;
         animation-duration: 1s;

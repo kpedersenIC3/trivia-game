@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-
+//Store that has all the functionality used in the app
 const store = createStore({
     state: {
         currentuser: {
@@ -68,15 +68,15 @@ const store = createStore({
                 }
             
                 url += "&difficulty=" + difficulty
-            
                 return url;
             }
+
             const options = store.getters.getQuestionOptions
             console.log(createQuestionsURL(options.amount,options.category,options.difficulty))
             const response = await fetch(createQuestionsURL(options.amount,options.category,options.difficulty))
             const questions = await response.json()
             commit('setQuestions', questions)
-        }
+        },
     },
     getters: {
         getUserList: (state) => {return state.userlist},

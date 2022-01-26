@@ -1,9 +1,9 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+
 </script>
 
 <template>
+<!-- load the routers and background image -->
   <img src="./assets/background.png" alt="background-image">
   <router-view />
 </template>

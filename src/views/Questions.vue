@@ -3,49 +3,63 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { ref, computed } from 'vue';
 
-
+//create the router and the store
 const router = useRouter();
 const store = useStore();
 
 
+
+const nextbuttontext = "Next Question"
+const gotoresultsbuttontext = "Go to results!"
 const currentuser = computed(() => store.getters.getCurrentUser)
 const pickedAnswer = ref('')
-const goToResult = () => router.push('/result')
-let shuffleArray = [0,1,2,3].sort((a, b) => 0.5 - Math.random())
+const shuffleArray = ref([0,1,2,3].sort((a, b) => 0.5 - Math.random()))
+//Array to randomize the answers position
+
+//const shuffleArray = () => {return [0,1,2,3].sort((a, b) => 0.5 - Math.random())}
+//let shufflearray = shuffleArray()
+//Start with the first question
 const questionNumber = ref(0)
+
+//On buttonclick, check if it's the true answer, update score and move on to next question
 const nextQuestion = () => {
-    questionNumber.value += 1;
+    let newShuffle = [0,1,2,3].sort((a, b) => 0.5 - Math.random())
     if(pickedAnswer.value === "true"){
         store.commit("updateCurrentScore", 10)
     }
+    questionNumber.value += 1
+    pickedAnswer.value = ''
+    shuffleArray.value = newShuffle
+    // if all questions are done, go to results 
+    if(questionNumber.value === Number(store.getters.getQuestionOptions.amount)){
+        router.push('/result')
+    }
 }
-
 
 </script>
 
 <template>
+ <!-- Say hello to the user and move through one
+ question at the time based on users choices on start page -->
     <h2>Hello {{ currentuser.username }} welcome to the Questions</h2>
     <br>
     <h2>Your current score is {{ currentuser.currentscore }}</h2>
     <div v-for="i in Number(store.getters.getQuestionOptions.amount)" :key="i">
     <div v-if="(i-1) === questionNumber">
+        <p>Question {{questionNumber + 1}} of {{store.getters.getQuestionOptions.amount}}</p>
         <form v-for="question in store.getters.getQuestions.slice(i-1,i)" :key="question">
-            <p>{{ question.question }}</p>
+            <p><strong>{{ question.question }}</strong></p>
             <div v-for="index of shuffleArray" :key="index">
-                <input v-if="index===3" type="radio" id="0" value="true" v-model="pickedAnswer">
-                <label v-if="index===3" for="0">{{ question.correct_answer }}</label>
-                <input v-if="index===2" type="radio" id="1" value="false1" v-model="pickedAnswer">
-                <label v-if="index===2" for="1">{{ question.incorrect_answers[2] }}</label>
-                <input v-if="index===1" type="radio" id="2" value="false2" v-model="pickedAnswer">
-                <label v-if="index===1" for="2">{{ question.incorrect_answers[1]}}</label>
-                <input v-if="index===0" type="radio" id="3" value="false3" v-model="pickedAnswer">
-                <label v-if="index===0" for="3">{{ question.incorrect_answers[0] }}</label>
+                <input v-if="index===3" type="radio" id="truth" value="true" v-model="pickedAnswer">
+                <input v-else type="radio" :id="index" :value="index" v-model="pickedAnswer">
+                <label v-if="index===3" for="truth">{{ question.correct_answer }}</label>
+                <label v-else :for="index">{{ question.incorrect_answers[index]}}</label>
             </div>
-            <button @click.prevent="nextQuestion">Next</button>
+            <br>
+            <button @click.prevent="nextQuestion">{{ questionNumber+1 === Number(store.getters.getQuestionOptions.amount) ? gotoresultsbuttontext:nextbuttontext }}</button>
         </form>
     </div>
     </div>
-    <button @click="goToResult">Go to Results</button>
 </template>
 
 <style scoped>
