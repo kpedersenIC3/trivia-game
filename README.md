@@ -12,7 +12,7 @@ follow the description below, to install the application.
 6. Run 'npm run dev' and open the localhost link
 7. Play around and take a quiz!
 ### Description
-A Trivia App made with Vue where the user can select a category no. of questions etc. to obtain a hi-score and become a trivia legend.
+A Trivia App made with Vue where the user can select a category no. of questions etc. to obtain a hi-score and become a trivia legend. This is awesome
 ### Usage
 Select a category, the amount of questions, difficulty and start racking those points up!
 ### Contribution
